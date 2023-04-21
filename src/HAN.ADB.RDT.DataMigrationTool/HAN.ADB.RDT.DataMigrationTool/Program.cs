@@ -20,7 +20,7 @@ using IHost host = Host.CreateDefaultBuilder(args)
 using IServiceScope serviceScope = host.Services.CreateScope();
 IServiceProvider provider = serviceScope.ServiceProvider;
 
-var migrationHelper = provider.GetRequiredService<IMigrationHelper>();
+var migrationHelper = provider.GetRequiredService<MigrationHelper>();
 
 await migrationHelper.MigratePosts();
 

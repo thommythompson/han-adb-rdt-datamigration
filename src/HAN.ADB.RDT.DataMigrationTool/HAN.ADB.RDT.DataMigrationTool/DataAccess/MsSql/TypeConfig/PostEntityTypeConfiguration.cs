@@ -12,6 +12,8 @@ namespace HAN.ADB.RDT.DataMigrationTool.DataAccess.MsSql.TypeConfig
 
         public void Configure(EntityTypeBuilder<Post> builder)
         {
+            builder.ToTable("Posts");
+
             builder.HasKey(e => e.Id);
 
             builder.HasOne(e => e.AcceptedAnswer)
@@ -27,13 +29,12 @@ namespace HAN.ADB.RDT.DataMigrationTool.DataAccess.MsSql.TypeConfig
                 .HasForeignKey(e => e.OwnerUserId);
 
             builder.HasOne(e => e.Parent)
-                .WithMany(e => e.Children)
+                .WithMany(e => e.Answers)
                 .HasForeignKey(e => e.ParentId);
 
             builder.HasOne(e => e.PostType)
                 .WithMany(e => e.Posts)
-                .HasForeignKey(e => e.PostTypeId);                
+                .HasForeignKey(e => e.PostTypeId);
         }
     }
 }
-

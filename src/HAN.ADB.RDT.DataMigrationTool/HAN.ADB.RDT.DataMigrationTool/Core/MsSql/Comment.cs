@@ -8,7 +8,7 @@ namespace HAN.ADB.RDT.DataMigrationTool.Core.Mssql
 		public int PostId { get; set; }
 		public Post Post { get; set; }
 		public int? Score { get; set; }
-		public int Text { get; set; }
+		public string Text { get; set; }
 		public int? UserId { get; set; }
 		public User? User { get; set; }
 	}

@@ -12,14 +12,16 @@ namespace HAN.ADB.RDT.DataMigrationTool.DataAccess.MsSql.TypeConfig
 
         public void Configure(EntityTypeBuilder<PostLink> builder)
         {
+            builder.ToTable("PostLinks");
+
             builder.HasKey(e => e.Id);
 
             builder.HasOne(e => e.Post)
-                .WithMany()
+                .WithMany(e => e.PostLinks)
                 .HasForeignKey(e => e.PostId);
 
             builder.HasOne(e => e.RelatedPost)
-                .WithMany()
+                .WithMany(e => e.RelatedPostFor)
                 .HasForeignKey(e => e.RelatedPostId);
 
             builder.HasOne(e => e.LinkType)

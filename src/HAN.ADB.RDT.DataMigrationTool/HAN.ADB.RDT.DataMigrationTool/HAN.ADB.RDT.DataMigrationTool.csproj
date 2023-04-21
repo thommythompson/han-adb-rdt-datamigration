@@ -18,6 +18,7 @@
     <None Remove="DataAccess\MongoDb\" />
     <None Remove="Core\MongoDb\" />
     <None Remove="appsettings.json" />
+    <None Remove="Helpers\Extensions\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DataAccess\" />
@@ -29,6 +30,7 @@
     <Folder Include="Helpers\" />
     <Folder Include="DataAccess\MongoDb\" />
     <Folder Include="Core\MongoDb\" />
+    <Folder Include="Helpers\Extensions\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />

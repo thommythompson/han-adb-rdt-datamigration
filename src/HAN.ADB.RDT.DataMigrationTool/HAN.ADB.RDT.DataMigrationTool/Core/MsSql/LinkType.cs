@@ -1,5 +1,4 @@
-﻿using System;
-namespace HAN.ADB.RDT.DataMigrationTool.Core.Mssql
+﻿namespace HAN.ADB.RDT.DataMigrationTool.Core.Mssql
 {
 	public class LinkType
 	{

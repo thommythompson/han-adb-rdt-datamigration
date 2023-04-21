@@ -5,7 +5,7 @@ namespace HAN.ADB.RDT.DataMigrationTool.Core.Mssql
 	{
 		public int Id { get; set; }
 		public int? AcceptedAnswerId { get; set; }
-		public Post AcceptedAnswer { get; set; }
+		public Post? AcceptedAnswer { get; set; }
 		public int? AnswerCount { get; set; }
 		public string Body { get; set; }
 		public DateTime? ClosedDate { get; set; }
@@ -30,10 +30,11 @@ namespace HAN.ADB.RDT.DataMigrationTool.Core.Mssql
 		public int ViewCount { get; set; }
 
         // Foreign references
-		public ICollection<Comment> Comments { get; set; }
-		public Post AcceptedAnswerFor { get; set; }
-		public ICollection<Post> Children { get; set; }
-		public ICollection<Vote> Votes { get; set; }
+		public ICollection<Comment>? Comments { get; set; }
+		public Post? AcceptedAnswerFor { get; set; }
+		public ICollection<Post>? Answers { get; set; }
+		public ICollection<Vote>? Votes { get; set; }
+		public ICollection<PostLink>? PostLinks { get; set; }
+        public ICollection<PostLink>? RelatedPostFor { get; set; }
     }
 }
-

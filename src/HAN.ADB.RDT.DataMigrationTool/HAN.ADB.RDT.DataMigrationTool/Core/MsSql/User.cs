@@ -19,11 +19,11 @@ namespace HAN.ADB.RDT.DataMigrationTool.Core.Mssql
 		public int? AccountId { get; set; }
 
 		// Foreign references
-		public ICollection<Badge> Badges { get; set; }
-        public ICollection<Comment> Comments { get; set; }
-		public ICollection<Post> LastEditorForPosts { get; set; }
-		public ICollection<Post> OwnerForPosts { get; set; }
-		public ICollection<Vote> Votes { get; set; }
+		public ICollection<Badge>? Badges { get; set; }
+        public ICollection<Comment>? Comments { get; set; }
+		public ICollection<Post>? LastEditorForPosts { get; set; }
+		public ICollection<Post>? OwnerForPosts { get; set; }
+		public ICollection<Vote>? Votes { get; set; }
     }
 }
 

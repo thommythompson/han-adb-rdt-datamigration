@@ -12,6 +12,8 @@ namespace HAN.ADB.RDT.DataMigrationTool.DataAccess.MsSql.TypeConfig
 
         public void Configure(EntityTypeBuilder<PostType> builder)
         {
+            builder.ToTable("PostTypes");
+
             builder.HasKey(e => e.Id);
         }
     }

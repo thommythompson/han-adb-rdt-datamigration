@@ -12,6 +12,8 @@ namespace HAN.ADB.RDT.DataMigrationTool.DataAccess.MsSql.TypeConfig
 
         public void Configure(EntityTypeBuilder<Vote> builder)
         {
+            builder.ToTable("Votes");
+
             builder.HasKey(e => e.Id);
 
             builder.HasOne(e => e.Post)

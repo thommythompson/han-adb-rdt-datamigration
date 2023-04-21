@@ -3,6 +3,7 @@ using HAN.ADB.RDT.DataMigrationTool.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using HAN.ADB.RDT.DataMigrationTool.DataAccess.MongoDb;
 
 namespace HAN.ADB.RDT.DataMigrationTool.Configuration
 {
@@ -17,7 +18,9 @@ namespace HAN.ADB.RDT.DataMigrationTool.Configuration
                     )
 			);
 
-			services.AddTransient<IMigrationHelper, MigrationHelper>();
+            services.AddSingleton<MongoDbRepository>(x => new MongoDbRepository(configuration.GetConnectionString("MongoDb")));
+
+            services.AddTransient<MigrationHelper>();
 
             return services;
 		}

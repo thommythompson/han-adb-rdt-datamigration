@@ -7,7 +7,7 @@ namespace HAN.ADB.RDT.DataMigrationTool.Core.Mssql
 		public string Type { get; set; }
 
         // Foreign references
-		public ICollection<Post> Posts { get; set; }
+		public ICollection<Post>? Posts { get; set; }
     }
 }
 

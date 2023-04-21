@@ -1,33 +1,23 @@
-﻿using HAN.ADB.RDT.DataMigrationTool.DataAccess.MsSql;
-using Microsoft.EntityFrameworkCore;
+﻿using HAN.ADB.RDT.DataMigrationTool.DataAccess.MongoDb;
+using HAN.ADB.RDT.DataMigrationTool.DataAccess.MsSql;
+using HAN.ADB.RDT.DataMigrationTool.Helpers.Extensions;
 
 namespace HAN.ADB.RDT.DataMigrationTool.Helpers
 {
-	public class MigrationHelper : IMigrationHelper
+	public class MigrationHelper
 	{
-		public readonly SqlContext _sqlContext;
+		private readonly SqlContext _sqlContext;
+		private readonly MongoDbRepository _mongoDbRepository;
 
-		public MigrationHelper(SqlContext sqlContext)
+		public MigrationHelper(SqlContext sqlContext, MongoDbRepository mongoDbRepository)
 		{
 			_sqlContext = sqlContext;
+			_mongoDbRepository = mongoDbRepository;
 		}
 
 		public async Task MigratePosts()
 		{
-			var posts = await _sqlContext.Posts
-				.Include(e => e.Children)
-				.Take(10)
-				.ToListAsync();
-
-			foreach(var post in posts)
-			{
-				Console.WriteLine($"Post with id {post.Id} has {post.Children.Count()} children:");
-
-				foreach(var child in post.Children)
-				{
-                    Console.WriteLine($"- Id {child.Id}");
-                }
-			}
+			await new MigratePostsHelper(_sqlContext, _mongoDbRepository).MigratePosts();
 		}
 	}
 }
