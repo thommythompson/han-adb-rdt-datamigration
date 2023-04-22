@@ -1,8 +1,6 @@
 ﻿using HAN.ADB.RDT.DataMigrationTool.DataAccess.MongoDb;
 using HAN.ADB.RDT.DataMigrationTool.DataAccess.MsSql;
 using Microsoft.EntityFrameworkCore;
-using AutoMapper;
-using System.Text.Json;
 
 namespace HAN.ADB.RDT.DataMigrationTool.Helpers.Extensions
 {
@@ -75,12 +73,7 @@ namespace HAN.ADB.RDT.DataMigrationTool.Helpers.Extensions
 
             Console.WriteLine($"Found {results.Count()} results.");
 
-            foreach (var result in results)
-            {
-                string json = JsonSerializer.Serialize(result);
-
-                Console.WriteLine(json);
-            }
+            await _mongoDbRepository.InsertPosts(results);
         }
     }
 }

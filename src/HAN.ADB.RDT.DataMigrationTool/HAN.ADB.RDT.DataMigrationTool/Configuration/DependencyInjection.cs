@@ -17,8 +17,8 @@ namespace HAN.ADB.RDT.DataMigrationTool.Configuration
 						configuration.GetConnectionString("Sql")
                     )
 			);
-
-            services.AddSingleton<MongoDbRepository>(x => new MongoDbRepository(configuration.GetConnectionString("MongoDb")));
+			
+            services.AddSingleton(x => new MongoDbRepository(configuration.GetConnectionString("MongoDb")));
 
             services.AddTransient<MigrationHelper>();
 
