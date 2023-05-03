@@ -23,6 +23,7 @@
         // Foreign references
         public IEnumerable<PostRef>? LastEditorForPosts { get; set; }
         public IEnumerable<PostRef>? Posts { get; set; }
+        public IEnumerable<int>? Answers { get; set; }
         public IEnumerable<int>? Votes { get; set; }
         public IEnumerable<int>? Comments { get; set; }
     }

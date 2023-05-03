@@ -19,6 +19,9 @@
     <None Remove="Core\MongoDb\" />
     <None Remove="appsettings.json" />
     <None Remove="Helpers\Extensions\" />
+    <None Remove="DataAccess\SqlLite\" />
+    <None Remove="Core\SqlLite\" />
+    <None Remove="DataAccess\SqlLite\TypeConfig\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DataAccess\" />
@@ -31,6 +34,9 @@
     <Folder Include="DataAccess\MongoDb\" />
     <Folder Include="Core\MongoDb\" />
     <Folder Include="Helpers\Extensions\" />
+    <Folder Include="DataAccess\SqlLite\" />
+    <Folder Include="Core\SqlLite\" />
+    <Folder Include="DataAccess\SqlLite\TypeConfig\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
@@ -41,6 +47,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
     <PackageReference Include="MongoDB.Driver" Version="2.19.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.5" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="appsettings.json">

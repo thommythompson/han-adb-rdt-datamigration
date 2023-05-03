@@ -1,44 +1,25 @@
 ﻿<Properties StartupConfiguration="{F5D4F8A0-AC5C-4A4E-B5F7-683E3737B794}|Default">
+  <MonoDevelop.Ide.ItemProperties.HAN.ADB.RDT.DataMigrationTool PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workbench ActiveDocument="HAN.ADB.RDT.DataMigrationTool/DataAccess/MongoDb/MongoDbRepository.cs">
     <Files>
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/Program.cs" Line="26" Column="1" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/SqlTypes/Badge.cs" Line="12" Column="2" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/SqlTypes/Comment.cs" Line="9" Column="33" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/SqlTypes/LinkType.cs" Line="1" Column="1" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/SqlTypes/PostLink.cs" Line="9" Column="33" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/SqlTypes/Post.cs" Line="27" Column="33" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/SqlTypes/PostType.cs" Line="9" Column="30" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/SqlTypes/User.cs" Line="26" Column="28" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/SqlTypes/Vote.cs" Line="7" Column="13" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/SqlTypes/VoteType.cs" Line="11" Column="1" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/DataAccess/MsSql/DbContext.cs" Line="38" Column="2" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/DataAccess/MsSql/TypeConfig/BageEntityTypeConfiguration.cs" Line="16" Column="1" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/DataAccess/MsSql/TypeConfig/CommentEntityTypeConfiguration.cs" Line="16" Column="1" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/DataAccess/MsSql/TypeConfig/PostEntityTypeConfiguration.cs" Line="16" Column="1" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/DataAccess/MsSql/TypeConfig/UserEntityTypeConfiguration.cs" Line="16" Column="1" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/DataAccess/MsSql/TypeConfig/VoteEntityTypeConfiguration.cs" Line="16" Column="1" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/Configuration/DependencyInjection.cs" Line="27" Column="3" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/appsettings.json" Line="6" Column="2" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/Helpers/MigrationHelper.cs" Line="20" Column="28" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/HAN.ADB.RDT.DataMigrationTool.csproj" Line="54" Column="15" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/DataAccess/MsSql/TypeConfig/LinkTypeEntityTypeConfiguration.cs" Line="16" Column="1" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/DataAccess/MsSql/TypeConfig/PostTypeEntityTypeConfiguration.cs" Line="16" Column="1" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/DataAccess/MsSql/TypeConfig/VoteTypeEntityTypeConfiguration (copy).cs" Line="16" Column="1" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/Core/MongoDb/User.cs" Line="31" Column="6" />
+      <File FileName="HAN.ADB.RDT.DataMigrationTool/Program.cs" />
+      <File FileName="HAN.ADB.RDT.DataMigrationTool/DataAccess/MsSql/TypeConfig/BageEntityTypeConfiguration.cs" />
+      <File FileName="HAN.ADB.RDT.DataMigrationTool/DataAccess/MsSql/TypeConfig/CommentEntityTypeConfiguration.cs" />
+      <File FileName="HAN.ADB.RDT.DataMigrationTool/DataAccess/MsSql/TypeConfig/PostEntityTypeConfiguration.cs" />
+      <File FileName="HAN.ADB.RDT.DataMigrationTool/DataAccess/MsSql/TypeConfig/UserEntityTypeConfiguration.cs" />
+      <File FileName="HAN.ADB.RDT.DataMigrationTool/DataAccess/MsSql/TypeConfig/VoteEntityTypeConfiguration.cs" />
+      <File FileName="HAN.ADB.RDT.DataMigrationTool/Configuration/DependencyInjection.cs" />
+      <File FileName="HAN.ADB.RDT.DataMigrationTool/appsettings.json" />
+      <File FileName="HAN.ADB.RDT.DataMigrationTool/Helpers/MigrationHelper.cs" />
+      <File FileName="HAN.ADB.RDT.DataMigrationTool/HAN.ADB.RDT.DataMigrationTool.csproj" />
+      <File FileName="HAN.ADB.RDT.DataMigrationTool/DataAccess/MsSql/TypeConfig/LinkTypeEntityTypeConfiguration.cs" />
+      <File FileName="HAN.ADB.RDT.DataMigrationTool/DataAccess/MsSql/TypeConfig/PostTypeEntityTypeConfiguration.cs" />
+      <File FileName="HAN.ADB.RDT.DataMigrationTool/Core/MongoDb/User.cs" />
       <File FileName="HAN.ADB.RDT.DataMigrationTool/Core/MongoDb/Post.cs" Line="43" Column="1" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/Core/MongoDb/PostRef.cs" Line="8" Column="6" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/Core/MongoDb/UserRef.cs" Line="8" Column="2" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/Helpers/Extensions/MigratePosts.cs" Line="19" Column="10" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/Core/Mappings/PostMappingConfig.cs" Line="32" Column="31" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/Core/Mappings/AutoMapperConfig.cs" Line="19" Column="16" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/Core/Mappings/UserMappingProfile.cs" Line="9" Column="1" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/Core/Mappings/CommentMappingProfile.cs" Line="15" Column="19" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/Core/Mappings/VoteMappingProfile.cs" Line="18" Column="2" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/Core/Mappings/UserRefMappingProfile.cs" Line="15" Column="2" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/Core/Mappings/PostRefMappingProfile.cs" Line="12" Column="19" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/DataAccess/MsSql/TypeConfig/PostLinkEntityTypeConfiguration.cs" Line="16" Column="1" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/Core/Mappings/BadgeMappingProfile.cs" Line="16" Column="2" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/DataAccess/MongoDb/MongoDbRepository.cs" Line="2" Column="20" />
+      <File FileName="HAN.ADB.RDT.DataMigrationTool/Core/MongoDb/PostRef.cs" />
+      <File FileName="HAN.ADB.RDT.DataMigrationTool/Core/MongoDb/UserRef.cs" />
+      <File FileName="HAN.ADB.RDT.DataMigrationTool/DataAccess/MsSql/TypeConfig/PostLinkEntityTypeConfiguration.cs" />
+      <File FileName="HAN.ADB.RDT.DataMigrationTool/DataAccess/MongoDb/MongoDbRepository.cs" Line="41" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -54,9 +35,7 @@
                 <Node name="MsSql" expanded="True" />
               </Node>
               <Node name="DataAccess" expanded="True">
-                <Node name="MongoDb" expanded="True">
-                  <Node name="MongoDbRepository.cs" selected="True" />
-                </Node>
+                <Node name="MongoDb" expanded="True" />
                 <Node name="MsSql" expanded="True">
                   <Node name="TypeConfig" expanded="True" />
                 </Node>
@@ -76,5 +55,4 @@
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.ItemProperties.HAN.ADB.RDT.DataMigrationTool PreferredExecutionTarget="MonoDevelop.Default" />
 </Properties>
