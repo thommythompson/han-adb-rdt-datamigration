@@ -3,7 +3,6 @@ using Microsoft.Extensions.Hosting;
 using HAN.ADB.RDT.DataMigrationTool.Configuration;
 using Microsoft.Extensions.Configuration;
 using HAN.ADB.RDT.DataMigrationTool.Helpers;
-using HAN.ADB.RDT.DataMigrationTool.DataAccess.SqlLite;
 
 using IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureAppConfiguration(app =>
@@ -20,10 +19,6 @@ using IHost host = Host.CreateDefaultBuilder(args)
 
 using IServiceScope serviceScope = host.Services.CreateScope();
 IServiceProvider provider = serviceScope.ServiceProvider;
-
-var progressContext = provider.GetRequiredService<ProgressContext>();
-
-await progressContext.Database.EnsureCreatedAsync();
 
 var migrationHelper = provider.GetRequiredService<MigrationHelper>();
 

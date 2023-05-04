@@ -1,47 +1,28 @@
 ﻿using HAN.ADB.RDT.DataMigrationTool.DataAccess.MongoDb;
 using HAN.ADB.RDT.DataMigrationTool.DataAccess.MsSql;
-using HAN.ADB.RDT.DataMigrationTool.DataAccess.SqlLite;
 using HAN.ADB.RDT.DataMigrationTool.Helpers.Extensions;
 
 namespace HAN.ADB.RDT.DataMigrationTool.Helpers
 {
 	public class MigrationHelper
 	{
-		private readonly SqlContext _sqlContext;
-		private readonly MongoDbRepository _mongoDbRepository;
-		private readonly ProgressContext _progressContext;
+        private readonly MigratePostsHelper _migratePostsHelper;
+        private readonly MigrateUsersHelper _migrateUsersHelper;
 
-		public MigrationHelper(SqlContext sqlContext, MongoDbRepository mongoDbRepository, ProgressContext progressContext)
+        public MigrationHelper(MigratePostsHelper migratePostsHelper, MigrateUsersHelper migrateUsersHelper)
 		{
-			_sqlContext = sqlContext;
-			_mongoDbRepository = mongoDbRepository;
-			_progressContext = progressContext;
+			_migratePostsHelper = migratePostsHelper;
+			_migrateUsersHelper = migrateUsersHelper;
 		}
 
 		public async Task MigratePosts()
 		{
-			int lastInsertedId = await GetLastInsertedPostId();
-			int maxId = await GetMaxPostId();
-
-			while (lastInsertedId != maxId)
-			{
-				Console.WriteLine($"Migrating post {lastInsertedId} from {maxId}");
-                await new MigratePostsHelper(_sqlContext, _mongoDbRepository, _progressContext).MigratePosts(lastInsertedId);
-
-				lastInsertedId = await GetLastInsertedPostId();
-                maxId = await GetMaxPostId();
-            }
+			await _migratePostsHelper.MigratePosts();
 		}
 
-		private async Task<int> GetLastInsertedPostId()
-		{
-            int lastInsertedId = _progressContext.PostProgresses.Select(e => e.LastInsertedId).DefaultIfEmpty().Max();
-			return lastInsertedId != null ? lastInsertedId : 0;
-        }
-
-		private async Task<int> GetMaxPostId()
-		{
-            return _sqlContext.Posts.Where(e => e.ParentId == null).Max(e => e.Id);
+        public async Task MigrateUsers()
+        {
+            await _migrateUsersHelper.MigrateUsers();
         }
     }
 }

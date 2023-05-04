@@ -9,45 +9,26 @@
 
   <ItemGroup>
     <None Remove="DataAccess\" />
-    <None Remove="Core\" />
-    <None Remove="Core\MsSql\" />
     <None Remove="DataAccess\MsSql\" />
-    <None Remove="DataAccess\MsSql\TypeConfig\" />
     <None Remove="Configuration\" />
     <None Remove="Helpers\" />
     <None Remove="DataAccess\MongoDb\" />
-    <None Remove="Core\MongoDb\" />
     <None Remove="appsettings.json" />
     <None Remove="Helpers\Extensions\" />
-    <None Remove="DataAccess\SqlLite\" />
-    <None Remove="Core\SqlLite\" />
-    <None Remove="DataAccess\SqlLite\TypeConfig\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DataAccess\" />
-    <Folder Include="Core\" />
-    <Folder Include="Core\MsSql\" />
     <Folder Include="DataAccess\MsSql\" />
-    <Folder Include="DataAccess\MsSql\TypeConfig\" />
     <Folder Include="Configuration\" />
     <Folder Include="Helpers\" />
     <Folder Include="DataAccess\MongoDb\" />
-    <Folder Include="Core\MongoDb\" />
     <Folder Include="Helpers\Extensions\" />
-    <Folder Include="DataAccess\SqlLite\" />
-    <Folder Include="Core\SqlLite\" />
-    <Folder Include="DataAccess\SqlLite\TypeConfig\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.5" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.5">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
     <PackageReference Include="MongoDB.Driver" Version="2.19.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.5" />
+    <PackageReference Include="Dapper" Version="2.0.123" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="appsettings.json">

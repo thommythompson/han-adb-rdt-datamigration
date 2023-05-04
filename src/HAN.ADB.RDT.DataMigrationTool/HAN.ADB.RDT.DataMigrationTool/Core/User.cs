@@ -1,7 +1,10 @@
-﻿namespace HAN.ADB.RDT.DataMigrationTool.Core.MongoDb
+﻿using MongoDB.Bson;
+
+namespace HAN.ADB.RDT.DataMigrationTool.Core
 {
 	public class User
 	{
+        public ObjectId _id { get; set; }
         public int Id { get; set; }
         public string? AboutMe { get; set; }
         public int? Age { get; set; }
@@ -30,6 +33,7 @@
 
     public class Badge
     {
+        public ObjectId _id { get; set; }
         public int Id { get; set; }
         public string Name { get; set; }
         public DateTime AcuiredAt { get; set; }

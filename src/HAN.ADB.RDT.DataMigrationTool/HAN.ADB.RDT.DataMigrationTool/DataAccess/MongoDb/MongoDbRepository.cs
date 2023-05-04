@@ -2,44 +2,90 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;
+using HAN.ADB.RDT.DataMigrationTool.Core;
+using System.Collections;
+using ThirdParty.Json.LitJson;
 
 namespace HAN.ADB.RDT.DataMigrationTool.DataAccess.MongoDb
 {
-	public class MongoDbRepository
-	{
-		private readonly string _connectionString;
-		private readonly string _databaseName;
+    public class MongoDbRepository : IMongoDbRepository
+    {
+        private readonly string _connectionString;
+        private readonly string _databaseName;
 
-		public MongoDbRepository(string connectionString)
-		{
-			_connectionString = connectionString;
+        public MongoDbRepository(string connectionString)
+        {
+            _connectionString = connectionString;
             _databaseName = connectionString.Split("//")[1].Split("/")[1];
 
             RegisterSerializer();
             RegisterBsonClasses();
         }
 
-        public async Task InsertPosts(IEnumerable<Core.MongoDb.Post> posts)
-		{
-            await AddToCollection("posts", posts);
-        }
-
-        public async Task InsertUsers(IEnumerable<Core.MongoDb.Post> users)
+        public async Task<int> GetMaxPostId()
         {
-            await AddToCollection("users", users);
-        }
-
-        private async Task AddToCollection(string collectionName, IEnumerable<object> objects)
-		{
             var client = new MongoClient(_connectionString);
             var database = client.GetDatabase(_databaseName);
 
-            var collection = database.GetCollection<BsonDocument>(collectionName);
+            var collection = database.GetCollection<Post>("posts");
 
-            IEnumerable<BsonDocument> bsonDocs = new List<BsonDocument>();
-            bsonDocs = objects.Select(e => e.ToBsonDocument());
+            var options = new FindOptions<Post, Post>
+            {
+                Limit = 1,
+                Sort = Builders<Post>.Sort.Descending(p => p.Id)
+            };
 
-            await collection.InsertManyAsync(bsonDocs);
+            var result = (await collection.FindAsync(FilterDefinition<Post>.Empty, options)).FirstOrDefault();
+
+            if (null != result)
+                return result.Id;
+
+            return default(int);
+        }
+
+        public async Task<int> GetMaxUserId()
+        {
+            var client = new MongoClient(_connectionString);
+            var database = client.GetDatabase(_databaseName);
+
+            var collection = database.GetCollection<User>("users");
+
+            var options = new FindOptions<User, User>
+            {
+                Limit = 1,
+                Sort = Builders<User>.Sort.Descending(p => p.Id)
+            };
+
+            var result = (await collection.FindAsync(FilterDefinition<User>.Empty, options)).FirstOrDefault();
+
+            if (null != result)
+                return result.Id;
+
+            return default(int);
+        }
+
+        public async Task InsertPosts(string json)
+        {
+            var client = new MongoClient(_connectionString);
+            var database = client.GetDatabase(_databaseName);
+
+            var collection = database.GetCollection<BsonDocument>("posts");
+
+            List<BsonDocument> documents = BsonSerializer.Deserialize<BsonArray>(json).Select(p => p.AsBsonDocument).ToList<BsonDocument>();
+
+            await collection.InsertManyAsync(documents);
+        }
+
+        public async Task InsertUsers(string json)
+        {
+            var client = new MongoClient(_connectionString);
+            var database = client.GetDatabase(_databaseName);
+
+            var collection = database.GetCollection<BsonDocument>("users");
+
+            var document = BsonSerializer.Deserialize<BsonDocument>(json);
+
+            await collection.InsertOneAsync(document);
         }
 
         private void RegisterSerializer()
@@ -50,41 +96,54 @@ namespace HAN.ADB.RDT.DataMigrationTool.DataAccess.MongoDb
 
         private void RegisterBsonClasses()
         {
-            BsonClassMap.RegisterClassMap<Core.MongoDb.Post>(cm => {
+            BsonClassMap.RegisterClassMap<Post>(cm =>
+            {
                 cm.AutoMap();
-                cm.SetIdMember(cm.GetMemberMap(c => c.Id));
+                cm.MapIdMember(c => c._id);
             });
 
-            BsonClassMap.RegisterClassMap<Core.MongoDb.PostRef>(cm => {
+            BsonClassMap.RegisterClassMap<PostRef>(cm =>
+            {
                 cm.AutoMap();
-                cm.SetIdMember(cm.GetMemberMap(c => c.Id));
+                cm.MapIdMember(c => c._id);
             });
 
-            BsonClassMap.RegisterClassMap<Core.MongoDb.User>(cm => {
+            BsonClassMap.RegisterClassMap<Comment>(cm =>
+            {
                 cm.AutoMap();
-                cm.SetIdMember(cm.GetMemberMap(c => c.Id));
+                cm.MapIdMember(c => c._id);
             });
 
-            BsonClassMap.RegisterClassMap<Core.MongoDb.UserRef>(cm => {
+            BsonClassMap.RegisterClassMap<Vote>(cm =>
+            {
                 cm.AutoMap();
-                cm.SetIdMember(cm.GetMemberMap(c => c.Id));
+                cm.MapIdMember(c => c._id);
             });
 
-            BsonClassMap.RegisterClassMap<Core.MongoDb.Comment>(cm => {
+            BsonClassMap.RegisterClassMap<Answer>(cm =>
+            {
                 cm.AutoMap();
-                cm.SetIdMember(cm.GetMemberMap(c => c.Id));
+                cm.MapIdMember(c => c._id);
             });
 
-            BsonClassMap.RegisterClassMap<Core.MongoDb.Vote>(cm => {
+            BsonClassMap.RegisterClassMap<User>(cm =>
+            {
                 cm.AutoMap();
-                cm.SetIdMember(cm.GetMemberMap(c => c.Id));
+                cm.MapIdMember(c => c._id);
             });
 
-            BsonClassMap.RegisterClassMap<Core.MongoDb.Badge>(cm => {
+            BsonClassMap.RegisterClassMap<UserRef>(cm =>
+            {
                 cm.AutoMap();
-                cm.SetIdMember(cm.GetMemberMap(c => c.Id));
+                cm.MapIdMember(c => c._id);
             });
+
+            BsonClassMap.RegisterClassMap<Badge>(cm =>
+            {
+                cm.AutoMap();
+                cm.MapIdMember(c => c._id);
+            });
+
         }
-	}
+    }
 }
-

@@ -1,49 +1,50 @@
-﻿using HAN.ADB.RDT.DataMigrationTool.DataAccess.MongoDb;
+﻿using System;
+using HAN.ADB.RDT.DataMigrationTool.DataAccess.MongoDb;
 using HAN.ADB.RDT.DataMigrationTool.DataAccess.MsSql;
 using Microsoft.Extensions.Logging;
 
 namespace HAN.ADB.RDT.DataMigrationTool.Helpers.Extensions
 {
-    public class MigratePostsHelper
-    {
+	public class MigrateUsersHelper
+	{
         private readonly ISqlRepository _sqlRepository;
         private readonly IMongoDbRepository _mongoDbRepository;
         private readonly ILogger<MigratePostsHelper> _logger;
 
-        private int MaxPostIdInSql { get; set; }
-        private int MaxPostIdInMongoDb { get; set; }
+        private int MaxUserIdInSql { get; set; }
+        private int MaxUserIdInMongoDb { get; set; }
 
-        public MigratePostsHelper(ISqlRepository sqlRepository, IMongoDbRepository mongoDbRepository, ILogger<MigratePostsHelper> logger)
+        public MigrateUsersHelper(ISqlRepository sqlRepository, IMongoDbRepository mongoDbRepository, ILogger<MigratePostsHelper> logger)
         {
             _sqlRepository = sqlRepository;
             _mongoDbRepository = mongoDbRepository;
             _logger = logger;
         }
 
-        public async Task MigratePosts()
+        public async Task MigrateUsers()
         {
             await UpdateMaxIds();
 
-            while (MaxPostIdInSql != MaxPostIdInMongoDb)
+            while (MaxUserIdInSql != MaxUserIdInMongoDb)
             {
                 string json;
                 try
                 {
-                    json = await _sqlRepository.GetPosts(MaxPostIdInMongoDb);
+                    json = await _sqlRepository.GetUsers(MaxUserIdInMongoDb);
                 }
                 catch(Exception ex)
                 {
-                    _logger.LogError($"Failed to fetch posts. Exception: {ex}");
+                    _logger.LogError($"Failed to fetch users. Exception: {ex}");
                     throw;
                 }
 
                 try
                 {
-                    await _mongoDbRepository.InsertPosts(json);
+                    await _mongoDbRepository.InsertUsers(json);
                 }
                 catch(Exception ex)
                 {
-                    _logger.LogError($"Failed to insert posts. Exception: {ex}");
+                    _logger.LogError($"Failed to insert users. Exception: {ex}");
                     throw;
                 }
 
@@ -55,16 +56,17 @@ namespace HAN.ADB.RDT.DataMigrationTool.Helpers.Extensions
         {
             try
             {
-                MaxPostIdInMongoDb = await _mongoDbRepository.GetMaxPostId();
-                MaxPostIdInSql = await _sqlRepository.GetMaxPostId();
+                MaxUserIdInMongoDb = await _mongoDbRepository.GetMaxUserId();
+                MaxUserIdInSql = await _sqlRepository.GetMaxUserId();
 
-                _logger.LogInformation($"Maximum MongoDb post id: {MaxPostIdInMongoDb}, maximum SQL Server post id {MaxPostIdInSql}.");
+                _logger.LogInformation($"Maximum MongoDb user id: {MaxUserIdInMongoDb}, maximum SQL Server user id {MaxUserIdInSql}.");
             }
             catch(Exception ex)
             {
-                _logger.LogError($"Failed to update max post id's. Exception: {ex}");
+                _logger.LogError($"Failed to update max user id's. Exception: {ex}");
                 throw;
             }
         }
     }
 }
+
