@@ -24,4 +24,6 @@ var migrationHelper = provider.GetRequiredService<MigrationHelper>();
 
 await migrationHelper.MigratePosts();
 
+await migrationHelper.MigrateUsers();
+
 await host.RunAsync();

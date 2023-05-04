@@ -64,28 +64,20 @@ namespace HAN.ADB.RDT.DataMigrationTool.DataAccess.MongoDb
             return default(int);
         }
 
-        public async Task InsertPosts(string json)
+        public async Task InsertPosts(string json) => await InsertJson(json, "posts");
+
+        public async Task InsertUsers(string json) => await InsertJson(json, "users");
+
+        private async Task InsertJson(string json, string collectionName)
         {
             var client = new MongoClient(_connectionString);
             var database = client.GetDatabase(_databaseName);
 
-            var collection = database.GetCollection<BsonDocument>("posts");
+            var collection = database.GetCollection<BsonDocument>(collectionName);
 
             List<BsonDocument> documents = BsonSerializer.Deserialize<BsonArray>(json).Select(p => p.AsBsonDocument).ToList<BsonDocument>();
 
             await collection.InsertManyAsync(documents);
-        }
-
-        public async Task InsertUsers(string json)
-        {
-            var client = new MongoClient(_connectionString);
-            var database = client.GetDatabase(_databaseName);
-
-            var collection = database.GetCollection<BsonDocument>("users");
-
-            var document = BsonSerializer.Deserialize<BsonDocument>(json);
-
-            await collection.InsertOneAsync(document);
         }
 
         private void RegisterSerializer()
@@ -108,13 +100,25 @@ namespace HAN.ADB.RDT.DataMigrationTool.DataAccess.MongoDb
                 cm.MapIdMember(c => c._id);
             });
 
-            BsonClassMap.RegisterClassMap<Comment>(cm =>
+            BsonClassMap.RegisterClassMap<PostComment>(cm =>
             {
                 cm.AutoMap();
                 cm.MapIdMember(c => c._id);
             });
 
-            BsonClassMap.RegisterClassMap<Vote>(cm =>
+            BsonClassMap.RegisterClassMap<PostVote>(cm =>
+            {
+                cm.AutoMap();
+                cm.MapIdMember(c => c._id);
+            });
+
+            BsonClassMap.RegisterClassMap<UserComment>(cm =>
+            {
+                cm.AutoMap();
+                cm.MapIdMember(c => c._id);
+            });
+
+            BsonClassMap.RegisterClassMap<UserVote>(cm =>
             {
                 cm.AutoMap();
                 cm.MapIdMember(c => c._id);
@@ -144,6 +148,17 @@ namespace HAN.ADB.RDT.DataMigrationTool.DataAccess.MongoDb
                 cm.MapIdMember(c => c._id);
             });
 
+            BsonClassMap.RegisterClassMap<QuestionRef>(cm =>
+            {
+                cm.AutoMap();
+                cm.MapIdMember(c => c._id);
+            });
+
+            BsonClassMap.RegisterClassMap<AnswerRef>(cm =>
+            {
+                cm.AutoMap();
+                cm.MapIdMember(c => c._id);
+            });
         }
     }
 }

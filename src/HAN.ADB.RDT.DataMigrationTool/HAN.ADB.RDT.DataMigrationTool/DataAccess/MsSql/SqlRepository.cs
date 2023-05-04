@@ -21,7 +21,7 @@ namespace HAN.ADB.RDT.DataMigrationTool.DataAccess.MsSql
         public async Task<string> GetPosts(int startId)
         {
             string query = $@"
-                SELECT TOP 10
+                SELECT TOP 1000
                     [Posts].[Id],
                     [Posts].[Title],
                     [Posts].[Body],
@@ -161,8 +161,95 @@ namespace HAN.ADB.RDT.DataMigrationTool.DataAccess.MsSql
                 FOR JSON PATH
             ";
 
-            var parameters = new{ StartId = startId };
+            return await FetchForJsonResult(query, startId);
+        }
 
+        public async Task<string> GetUsers(int startId)
+        {
+            string query = $@"
+                SELECT TOP 100 [Users].[Id],
+                    [Users].[AboutMe],
+                    [Users].[Age],
+                    [Users].[CreationDate],
+                    [Users].[DisplayName],
+                    [Users].[DownVotes],
+                    [Users].[UpVotes],
+                    [Users].[EmailHash],
+                    [Users].[LastAccessDate],
+                    [Users].[Location],
+                    [Users].[Reputation],
+                    [Users].[Views],
+                    [Users].[WebsiteUrl],
+                    [Users].[AccountId],
+                    (
+                        SELECT [Id], [Name], [Date] AS [AcuiredAt]
+                        FROM [Badges]
+                        WHERE [UserId] = [Users].[Id]
+                        FOR JSON PATH
+                    ) AS [Badges],
+                    (
+                        SELECT [Posts].[Id], 
+                            [Posts].[Title], 
+                            [Posts].[ViewCount],
+                            IIF([Posts].[AcceptedAnswerId] IS NOT NULL, CAST(1 AS BIT), CAST(0 AS BIT)) AS [HasAcceptedAnswer],
+                            [Posts].[CreationDate],
+                            [Posts].[Score],
+                            (
+                                SELECT COUNT(1)
+                                FROM [Posts] AS [Answers]
+                                WHERE [Answers].[Id] = [Posts].[Id]
+                            ) AS [AnswerCount],
+                            JSON_QUERY('[' + REPLACE(REPLACE(REPLACE([Posts].[Tags],'<','""'),'>','""'),'""""','"",""') + ']') AS [Tags]
+                        FROM [Posts] AS [Posts]
+                        WHERE [Posts].[OwnerUserId] = [Users].[Id]
+                        FOR JSON PATH
+                    ) AS [Questions],
+                    (
+                        SELECT [Answers].[Id], 
+                            [Posts].[Title], 
+                            IIF([Posts].[AcceptedAnswerId] = [Answers].[Id], CAST(1 AS BIT), CAST(0 AS BIT)) AS [IsAcceptedAnswer],
+                            [Answers].[CreationDate],
+                            [Answers].[Score],
+                            JSON_QUERY('[' + REPLACE(REPLACE(REPLACE([Posts].[Tags],'<','""'),'>','""'),'""""','"",""') + ']') AS [Tags]
+                        FROM [Posts] AS [Posts]
+                        INNER JOIN [Posts] AS [Answers]
+                            ON [Posts].[Id] = [Answers].[ParentId]
+                        WHERE [Answers].[OwnerUserId] = [Users].[Id]
+                        FOR JSON PATH
+                    ) AS [Answers],
+                    (
+                        SELECT [Votes].[Id],
+                            [Votes].[PostId],
+                            [Votes].[BountyAmount], 
+                            [Votes].[CreationDate],
+                            [VoteTypes].[Name] AS [VoteType]
+                        FROM [Votes] AS [Votes] 
+                        LEFT JOIN [VoteTypes] AS [VoteTypes]
+                            ON [Votes].[VoteTypeId] = [VoteTypes].[Id]
+                        WHERE [UserId] = [Users].[Id] 
+                        FOR JSON PATH
+                    ) AS [Votes],
+                    (
+                        SELECT [Comments].[Id],
+                            [Comments].[PostId],
+                            [Comments].[Text] AS [Body], 
+                            [Comments].[Score],
+                            [Comments].[CreationDate]
+                        FROM [Comments] AS [Comments]
+                        WHERE [UserId] = [Users].[Id] 
+                        FOR JSON PATH
+                    ) AS [Comments]
+                FROM [Users] AS [Users]
+                WHERE [Id] > @StartId
+                ORDER BY Id ASC
+                FOR JSON PATH
+            ";
+
+            return await FetchForJsonResult(query, startId);
+        }
+
+        private async Task<string> FetchForJsonResult(string query, int startId)
+        {
             using (SqlConnection conn = new SqlConnection(_connectionString))
             using (SqlCommand cmd = new SqlCommand(query, conn))
             {
@@ -180,8 +267,6 @@ namespace HAN.ADB.RDT.DataMigrationTool.DataAccess.MsSql
                     while (reader.Read())
                     {
                         jsonResult.Append(reader.GetValue(0).ToString());
-
-                        
                     }
                 }
 
@@ -189,14 +274,9 @@ namespace HAN.ADB.RDT.DataMigrationTool.DataAccess.MsSql
             }
         }
 
-        public async Task<string> GetUsers(int startId)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<int> GetMaxPostId()
         {
-            string query = "SELECT MAX(Id) FROM Posts";
+            string query = "SELECT MAX(Id) FROM Posts WHERE ParentId IS NULL";
 
             using (var connection = new SqlConnection(_connectionString))
             {
@@ -240,6 +320,17 @@ namespace HAN.ADB.RDT.DataMigrationTool.DataAccess.MsSql
                     CREATE CLUSTERED INDEX [IX_Comments_PostId] ON [dbo].[Comments] ([PostId])
                 END
 
+                IF NOT EXISTS(
+                    SELECT 1
+                    FROM sys.indexes 
+                    WHERE NAME='IX_Comments_UserId' AND OBJECT_ID = OBJECT_ID('Comments')
+                )
+                BEGIN
+                    CREATE NONCLUSTERED INDEX [IX_Comments_UserId]
+                    ON [dbo].[Comments] ([UserId])
+                    INCLUDE ([Id],[PostId],[Text],[Score],[CreationDate])
+                END
+
                 /*
                 Votes:
                 Changing the clustered index for Votes to PostId because Votes will mostly be viewed from the perspective of their parent post. 
@@ -263,10 +354,42 @@ namespace HAN.ADB.RDT.DataMigrationTool.DataAccess.MsSql
                     CREATE CLUSTERED INDEX [IX_Votes_PostId] ON [dbo].[Votes] ([PostId])
                 END
 
+                IF NOT EXISTS(
+                    SELECT 1
+                    FROM sys.indexes 
+                    WHERE NAME='IX_Votes_UserId' AND OBJECT_ID = OBJECT_ID('Votes')
+                )
+                BEGIN
+                    CREATE NONCLUSTERED INDEX [IX_Votes_UserId]
+                    ON [dbo].[Votes] ([UserId])
+                    INCLUDE ([Id],[PostId],[BountyAmount],[VoteTypeId],[CreationDate])
+                END
+
+                /*
+                Badges:
+                Badges are only related to the user and will only be shown togheter with this user. And thus they will always be searched for via the UserId, that why it makes sense to change the clustered key to the UserId
+                */
+                IF EXISTS(
+                    SELECT 1
+                    FROM sys.indexes 
+                    WHERE NAME='PK_Badges__Id' AND OBJECT_ID = OBJECT_ID('Badges')
+                )
+                BEGIN
+                    ALTER TABLE [dbo].[Badges] DROP CONSTRAINT [PK_Badges__Id]
+                END
+
+                IF NOT EXISTS(
+                    SELECT 1
+                    FROM sys.indexes 
+                    WHERE NAME='IX_Badges_UserId' AND OBJECT_ID = OBJECT_ID('Badges')
+                )
+                BEGIN
+                    CREATE CLUSTERED INDEX [IX_Badges_UserId] ON [dbo].[Badges] ([UserId])
+                END
+
                 /*
                 PostLinks:
-                Changing the clustered index for PostLinks to PostId because PostLinks will mostly be viewed from the perspective of their parent post. 
-                Viewing it from the user perspecive can still be done via a non clustered index on the UserId but will result in bookmark lookups.
+                Changing the clustered index for PostLinks to PostId because PostLinks will only be viewed from the perspective of their parent post. 
                 */
                 IF EXISTS(
                     SELECT 1
@@ -287,9 +410,10 @@ namespace HAN.ADB.RDT.DataMigrationTool.DataAccess.MsSql
                 END
 
                 /*
-                Posts (Answers):
+                Posts:
                 Posts will mostly be searched for via it's id but a post can also be an answer, in such a case it will be searched for by it's parent id. 
                 For this case we make a non clustered index that will include all attributes that will be selected for answers so bookmark lookups will be avoided.
+                Posts can also be searched for via the OwnerId of the user, thus we also create a clustered index to aid in the performance of those queries.
                 */
                 IF NOT EXISTS(
                     SELECT 1
@@ -300,6 +424,17 @@ namespace HAN.ADB.RDT.DataMigrationTool.DataAccess.MsSql
                     CREATE NONCLUSTERED INDEX [IX_Posts_ParentId]
                     ON [dbo].[Posts] ([ParentId])
                     INCLUDE ([Id],[Body],[ClosedDate],[CommunityOwnedDate],[CreationDate],[FavoriteCount],[LastActivityDate],[LastEditDate],[PostTypeId],[Score],[LastEditorUserId],[OwnerUserId])
+                END
+
+                IF NOT EXISTS(
+                    SELECT 1
+                    FROM sys.indexes 
+                    WHERE NAME='IX_Posts_OwnerUserId' AND OBJECT_ID = OBJECT_ID('Posts')
+                )
+                BEGIN
+                    CREATE NONCLUSTERED INDEX [IX_Posts_OwnerUserId]
+                    ON [dbo].[Posts] ([OwnerUserId])
+                    INCLUDE ([Id],[Title],[ViewCount],[AcceptedAnswerId],[CreationDate],[Score],[Tags])
                 END
             ";
 

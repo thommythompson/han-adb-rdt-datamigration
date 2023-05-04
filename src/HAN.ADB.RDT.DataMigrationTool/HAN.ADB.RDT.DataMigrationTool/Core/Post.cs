@@ -23,8 +23,8 @@ namespace HAN.ADB.RDT.DataMigrationTool.Core
         public int ViewCount { get; set; }
 
         // Related Data
-        public IEnumerable<Comment>? Comments { get; set; }
-        public IEnumerable<Vote>? Votes { get; set; }
+        public IEnumerable<PostComment>? Comments { get; set; }
+        public IEnumerable<PostVote>? Votes { get; set; }
 
         // References
         public UserRef? LastEditorUser { get; set; }
@@ -53,15 +53,15 @@ namespace HAN.ADB.RDT.DataMigrationTool.Core
         public int ViewCount { get; set; }
 
         // Related Data
-        public IEnumerable<Comment>? Comments { get; set; }
-        public IEnumerable<Vote>? Votes { get; set; }
+        public IEnumerable<PostComment>? Comments { get; set; }
+        public IEnumerable<PostVote>? Votes { get; set; }
 
         // References
         public UserRef? LastEditorUser { get; set; }
         public UserRef? OwnerUser { get; set; }
     }
 
-    public class Comment
+    public class PostComment
     {
         public ObjectId _id { get; set; }
         public int Id { get; set; }
@@ -73,7 +73,7 @@ namespace HAN.ADB.RDT.DataMigrationTool.Core
         public UserRef? User { get; set; }
     }
 
-    public class Vote
+    public class PostVote
     {
         public ObjectId _id { get; set; }
         public int Id { get; set; }
