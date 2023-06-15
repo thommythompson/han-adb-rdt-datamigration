@@ -167,7 +167,7 @@ namespace HAN.ADB.RDT.DataMigrationTool.DataAccess.MsSql
         public async Task<string> GetUsers(int startId)
         {
             string query = $@"
-                SELECT TOP 100 [Users].[Id],
+                SELECT TOP 1000 [Users].[Id],
                     [Users].[AboutMe],
                     [Users].[Age],
                     [Users].[CreationDate],

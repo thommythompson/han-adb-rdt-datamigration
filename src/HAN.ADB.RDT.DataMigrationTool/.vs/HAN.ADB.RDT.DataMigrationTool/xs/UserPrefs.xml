@@ -1,40 +1,23 @@
 ﻿<Properties StartupConfiguration="{F5D4F8A0-AC5C-4A4E-B5F7-683E3737B794}|Default">
-  <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.ItemProperties.HAN.ADB.RDT.DataMigrationTool PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Catchpoint exceptionName="System.Exception" includeSubclasses="True" />
-    </BreakpointStore>
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workbench ActiveDocument="HAN.ADB.RDT.DataMigrationTool/DataAccess/MongoDb/MongoDbRepository.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="HAN.ADB.RDT.DataMigrationTool/DataAccess/MsSql/SqlRepository.cs">
     <Files>
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/Program.cs" Line="25" Column="1" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/DataAccess/MsSql/TypeConfig/BageEntityTypeConfiguration.cs" Line="7" Column="76" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/DataAccess/MsSql/TypeConfig/PostEntityTypeConfiguration.cs" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/DataAccess/MsSql/TypeConfig/UserEntityTypeConfiguration.cs" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/DataAccess/MsSql/TypeConfig/VoteEntityTypeConfiguration.cs" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/Configuration/DependencyInjection.cs" Line="3" Column="42" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/appsettings.json" Line="5" Column="4" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/Helpers/MigrationHelper.cs" Line="20" Column="1" />
+      <File FileName="HAN.ADB.RDT.DataMigrationTool/Program.cs" Line="28" Column="1" />
+      <File FileName="HAN.ADB.RDT.DataMigrationTool/Configuration/DependencyInjection.cs" />
+      <File FileName="HAN.ADB.RDT.DataMigrationTool/appsettings.json" />
+      <File FileName="HAN.ADB.RDT.DataMigrationTool/Helpers/MigrationHelper.cs" Line="24" Column="10" />
       <File FileName="HAN.ADB.RDT.DataMigrationTool/HAN.ADB.RDT.DataMigrationTool.csproj" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/DataAccess/MsSql/TypeConfig/LinkTypeEntityTypeConfiguration.cs" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/DataAccess/MsSql/TypeConfig/PostTypeEntityTypeConfiguration.cs" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/Core/MongoDb/User.cs" Line="6" Column="3" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/Core/MongoDb/Post.cs" Line="22" Column="42" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/Core/MongoDb/PostRef.cs" Line="2" Column="2" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/Core/MongoDb/UserRef.cs" Line="4" Column="3" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/DataAccess/MsSql/TypeConfig/PostLinkEntityTypeConfiguration.cs" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/DataAccess/MongoDb/MongoDbRepository.cs" Line="71" Column="1" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/DataAccess/MsSql/SqlContext.cs" Line="149" Column="10" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/Core/SqlLite/PostProgress.cs" Line="5" Column="3" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/DataAccess/SqlLite/SqlContext.cs" Line="29" Column="2" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/DataAccess/SqlLite/TypeConfig/PostProgressTypeConfiguration.cs" Line="16" Column="10" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/Helpers/Extensions/MigratePostsHelper.cs" Line="43" Column="18" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/DataAccess/MsSql/ISqlRepository.cs" Line="7" Column="33" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/DataAccess/MongoDb/IMongoDbRepository.cs" Line="7" Column="24" />
-      <File FileName="HAN.ADB.RDT.DataMigrationTool/Helpers/Extensions/MigrateUsersHelper.cs" Line="34" Column="18" />
+      <File FileName="HAN.ADB.RDT.DataMigrationTool/DataAccess/MongoDb/MongoDbRepository.cs" Line="59" Column="1" />
+      <File FileName="HAN.ADB.RDT.DataMigrationTool/Helpers/Extensions/MigratePostsHelper.cs" Line="50" Column="1" />
+      <File FileName="HAN.ADB.RDT.DataMigrationTool/DataAccess/MsSql/ISqlRepository.cs" Line="12" Column="2" />
+      <File FileName="HAN.ADB.RDT.DataMigrationTool/DataAccess/MongoDb/IMongoDbRepository.cs" Line="8" Column="25" />
+      <File FileName="HAN.ADB.RDT.DataMigrationTool/Helpers/Extensions/MigrateUsersHelper.cs" Line="43" Column="51" />
+      <File FileName="HAN.ADB.RDT.DataMigrationTool/DataAccess/MsSql/SqlRepository.cs" Line="172" Column="35" />
+      <File FileName="HAN.ADB.RDT.DataMigrationTool/Core/Post.cs" Line="64" Column="5" />
+      <File FileName="HAN.ADB.RDT.DataMigrationTool/Core/PostRef.cs" Line="10" Column="44" />
+      <File FileName="HAN.ADB.RDT.DataMigrationTool/Core/User.cs" Line="52" Column="6" />
+      <File FileName="HAN.ADB.RDT.DataMigrationTool/Core/UserRef.cs" Line="7" Column="42" />
+      <File FileName="HAN.ADB.RDT.DataMigrationTool/Core/AnswerRef.cs" Line="14" Column="6" />
+      <File FileName="HAN.ADB.RDT.DataMigrationTool/Core/PostRef.cs" Line="8" Column="19" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -47,9 +30,7 @@
               <Node name="Configuration" expanded="True" />
               <Node name="Core" expanded="True" />
               <Node name="DataAccess" expanded="True">
-                <Node name="MongoDb" expanded="True">
-                  <Node name="MongoDbRepository.cs" selected="True" />
-                </Node>
+                <Node name="MongoDb" expanded="True" />
                 <Node name="MsSql" expanded="True" />
               </Node>
               <Node name="Helpers" expanded="True">
@@ -61,4 +42,13 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.HAN.ADB.RDT.DataMigrationTool PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Catchpoint exceptionName="System.Exception" includeSubclasses="True" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
 </Properties>
